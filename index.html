@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<!-- Elegant font for last line -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #4facfe, #6a5acd);
+    color: white;
+    overflow: hidden;
+}
+
+/* Hearts */
+.heart {
+    position: absolute;
+    bottom: -10px;
+    color: rgba(255,255,255,0.7);
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-110vh); opacity: 0; }
+}
+
+.container {
+    text-align: center;
+    z-index: 2;
+}
+
+.message {
+    font-size: 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+    white-space: pre-line;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: white;
+    color: #6a5acd;
+    font-size: 16px;
+    cursor: pointer;
+    display: none;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+/* Smooth exit */
+.fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+/* Video */
+video {
+    margin-top: 20px;
+    width: 320px;
+    border-radius: 12px;
+    display: none;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div id="text" class="message"></div>
+    <button id="btn">Click here</button>
+
+    <div class="video-container">
+        <video id="video" controls>
+            <source src="world hello.mp4" type="video/mp4">
+        </video>
+    </div>
+</div>
+
+<script>
+
+let step = 0;
+const text = document.getElementById("text");
+const btn = document.getElementById("btn");
+const video = document.getElementById("video");
+
+/* Initial */
+setTimeout(() => {
+    text.innerText = "Hiii Cutuuu ❤️";
+    text.classList.add("show");
+}, 500);
+
+setTimeout(() => {
+    btn.style.display = "inline-block";
+}, 2000);
+
+/* Smooth text change */
+function changeText(newText, isFinal = false) {
+    text.classList.remove("show");
+    text.classList.add("fade-out");
+
+    setTimeout(() => {
+        text.classList.remove("fade-out");
+        text.innerText = newText;
+        text.classList.add("show");
+
+        if(isFinal){
+            video.style.display = "block";
+            video.play();
+            btn.style.display = "none";
+        }
+
+    }, 600);
+}
+
+btn.onclick = () => {
+
+    if(step === 0){
+        changeText("This might irritate you but I gotta tell it");
+    }
+
+    else if(step === 1){
+        changeText("I'm really sorry for hurting you cutuu.\nEven though it was unintentional it still ended up hurting you.");
+    }
+
+    else if(step === 2){
+        changeText("It's jus randomly poping in my head and everytime it does, I feel so bad of my actions.\nSoooo...");
+    }
+
+    else if(step === 3){
+        text.classList.remove("show");
+        text.classList.add("fade-out");
+
+        setTimeout(() => {
+            text.innerHTML = "<h1 style='font-family: \"Playfair Display\", serif; letter-spacing: 1px;'>Maaf kardo madam jii ❤️</h1>";
+            text.classList.remove("fade-out");
+            text.classList.add("show");
+
+            video.style.display = "block";
+            video.play();
+            btn.style.display = "none";
+        }, 600);
+    }
+
+    step++;
+};
+
+/* Hearts animation */
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerText = "❤️";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (15 + Math.random() * 15) + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}, 500);
+
+</script>
+
+</body>
+</html>
